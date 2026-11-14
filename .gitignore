@@ -1,4 +1,6 @@
 .env
 .env.example
-venv
-node_modules
+venv/
+node_modules/
+__pycache__/
+*.pyc

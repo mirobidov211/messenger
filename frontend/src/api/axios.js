@@ -1,10 +1,18 @@
 import axios from 'axios';
 import { useAuthStore } from '../store/authStore';
 
-const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8000/api',
-});
+export const getApiBaseUrl = () => {
+  let url = (import.meta.env.VITE_API_URL || 'http://localhost:8000/api').trim();
+  url = url.replace(/\/+$/, '');
+  if (!url.endsWith('/api')) {
+    url = `${url}/api`;
+  }
+  return url;
+};
 
+const api = axios.create({
+  baseURL: getApiBaseUrl(),
+});
 
 api.interceptors.request.use(
   (config) => {
@@ -25,7 +33,10 @@ api.interceptors.response.use(
       originalRequest._retry = true;
       try {
         const refreshToken = useAuthStore.getState().refreshToken;
-        const res = await axios.post('http://localhost:8000/api/auth/refresh', { refresh: refreshToken });
+        if (!refreshToken) {
+          throw new Error('No refresh token');
+        }
+        const res = await axios.post(`${getApiBaseUrl()}/auth/refresh/`, { refresh: refreshToken });
         const { access } = res.data;
         useAuthStore.getState().setTokens(access, refreshToken);
         api.defaults.headers.common['Authorization'] = `Bearer ${access}`;

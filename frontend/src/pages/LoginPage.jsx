@@ -1,58 +1,126 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { User, Lock, Eye, EyeOff, ArrowRight } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
-import Input from '../components/ui/Input';
-import Button from '../components/ui/Button';
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const { login, loading, error } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const success = await login({ username, password });
-    if (success) navigate('/');
+    if (success) {
+      navigate('/');
+    }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-telegram-darker p-4">
-      <div className="w-full max-w-md bg-telegram-dark p-8 rounded-2xl shadow-xl transform transition-all">
-        <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-telegram-blue rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.18-.08-.05-.19-.02-.27 0-.11.03-1.88 1.2-5.32 3.53-.5.35-.95.52-1.36.51-.45-.01-1.31-.25-1.95-.46-.78-.26-1.4-.4-1.35-.85.03-.23.36-.47 1-.72 3.91-1.7 6.53-2.83 7.84-3.38 3.74-1.56 4.51-1.83 5.01-1.84.11 0 .36.03.49.15.11.1.15.24.13.36z"/></svg>
+    <div className="min-h-screen auth-bg flex items-center justify-center p-4">
+      {/* Floating circles */}
+      <div className="auth-circle auth-circle-1"></div>
+      <div className="auth-circle auth-circle-2"></div>
+      <div className="auth-circle auth-circle-3"></div>
+      <div className="auth-circle auth-circle-4"></div>
+
+      <div className="w-full max-w-[420px] animate-scale-in">
+        <div className="auth-card px-8 py-10 sm:px-10 sm:py-12">
+          {/* Logo */}
+          <div className="text-center mb-8">
+            <div className="inline-flex items-center justify-center w-[68px] h-[68px] bg-gradient-to-br from-blue-400 to-blue-600 rounded-[20px] mb-5 shadow-lg shadow-blue-500/25 relative">
+              <span className="text-white font-bold text-2xl">A</span>
+              <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-blue-500 rounded-full border-[3px] border-white flex items-center justify-center">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                </svg>
+              </div>
+            </div>
+            <p className="text-blue-500 text-xs font-bold tracking-[3px] uppercase mb-3">Welcome Back</p>
+            <h1 className="text-[26px] font-bold text-gray-900 leading-tight">Sign in to your account</h1>
+            <p className="text-gray-400 text-sm mt-2">Enter your details to continue to Messenger</p>
           </div>
-          <h2 className="text-2xl font-bold text-white">Sign in to Messenger</h2>
-          <p className="text-gray-400 mt-2">Please enter your credentials</p>
+
+          {/* Error message */}
+          {error && (
+            <div className="mb-5 p-3.5 bg-red-50 border border-red-100 rounded-xl text-red-500 text-sm font-medium animate-fade-in flex items-center gap-2">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="15" y1="9" x2="9" y2="15"></line>
+                <line x1="9" y1="9" x2="15" y2="15"></line>
+              </svg>
+              {error}
+            </div>
+          )}
+
+          {/* Form */}
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">Username</label>
+              <div className="auth-input-group">
+                <User className="auth-input-icon" size={18} />
+                <input
+                  type="text"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  className="auth-input"
+                  placeholder="Enter your username"
+                  required
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">Password</label>
+              <div className="auth-input-group">
+                <Lock className="auth-input-icon" size={18} />
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="auth-input pr-12"
+                  placeholder="Enter your password"
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+              </div>
+            </div>
+
+            <div className="pt-1">
+              <button
+                type="submit"
+                disabled={loading}
+                className="auth-btn"
+              >
+                {loading ? (
+                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                ) : (
+                  <>
+                    Sign in <ArrowRight size={18} />
+                  </>
+                )}
+              </button>
+            </div>
+          </form>
+
+          <p className="text-center mt-7 text-gray-400 text-sm">
+            Don't have an account?{' '}
+            <Link to="/register" className="text-blue-500 hover:text-blue-600 font-semibold transition-colors">
+              Sign up
+            </Link>
+          </p>
         </div>
-
-        {error && <div className="bg-red-500 bg-opacity-10 text-red-500 p-3 rounded-lg mb-6 text-sm text-center">{error}</div>}
-
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <Input
-            placeholder="Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-          <Input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-          <Button type="submit" className="w-full py-3 mt-4" disabled={loading}>
-            {loading ? 'Signing in...' : 'Sign In'}
-          </Button>
-        </form>
-
-        <p className="text-center text-gray-400 mt-6 text-sm">
-          Don't have an account? <Link to="/register" className="text-telegram-blue hover:underline">Sign up</Link>
-        </p>
       </div>
     </div>
   );
 };
+
 export default LoginPage;

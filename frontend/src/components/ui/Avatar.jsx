@@ -18,7 +18,10 @@ const Avatar = ({ src, alt, size = 'md', online, className }) => {
     if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:') || url.startsWith('blob:')) {
       return url;
     }
-    return `http://localhost:8000${url.startsWith('/') ? '' : '/'}${url}`;
+    const backendOrigin = (import.meta.env.VITE_API_URL || 'http://localhost:8000')
+      .replace(/\/api\/?$/, '')
+      .replace(/\/+$/, '');
+    return `${backendOrigin}${url.startsWith('/') ? '' : '/'}${url}`;
   };
 
   const avatarSrc = getFullAvatarUrl(src);
