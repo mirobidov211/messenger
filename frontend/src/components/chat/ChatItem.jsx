@@ -26,16 +26,18 @@ const ChatItem = ({ chat, isActive, onClick }) => {
     <div
       onClick={onClick}
       className={clsx(
-        'flex items-center gap-3 p-3 cursor-pointer transition-colors select-none',
-        isActive ? 'bg-telegram-blue text-white' : 'hover:bg-telegram-surface'
+        'flex items-center gap-3 p-3 cursor-pointer transition-all select-none',
+        isActive
+          ? 'bg-[#2b5278] text-white'
+          : 'hover:bg-[#242f3d] active:bg-[#2b5278]/30'
       )}
     >
       <Avatar alt={displayName} src={avatarSrc} online={isOnline} size="md" />
       <div className="flex-1 min-w-0">
         <div className="flex justify-between items-baseline mb-1">
-          <h3 className="font-medium truncate text-white text-sm">{displayName}</h3>
+          <h3 className="font-semibold truncate text-white text-[14px]">{displayName}</h3>
           {lastTime && (
-            <span className={clsx('text-xs shrink-0 ml-2', isActive ? 'text-blue-100' : 'text-gray-400')}>
+            <span className={clsx('text-xs shrink-0 ml-2', isActive ? 'text-blue-200' : 'text-gray-500')}>
               {lastTime}
             </span>
           )}
@@ -43,11 +45,11 @@ const ChatItem = ({ chat, isActive, onClick }) => {
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-1 min-w-0 mr-2">
             {isOwnLastMsg && (
-              <span className={clsx('shrink-0', isActive ? 'text-blue-100' : lastMsg.is_read || lastMsg.isRead ? 'text-telegram-blue' : 'text-gray-400')}>
+              <span className={clsx('shrink-0', isActive ? 'text-blue-200' : lastMsg.is_read || lastMsg.isRead ? 'text-[#2aabee]' : 'text-gray-500')}>
                 {lastMsg.is_read || lastMsg.isRead ? <CheckCheck size={14} /> : <Check size={14} />}
               </span>
             )}
-            <p className={clsx('text-xs truncate', isActive ? 'text-blue-100' : 'text-gray-400')}>
+            <p className={clsx('text-xs truncate', isActive ? 'text-blue-200' : 'text-gray-500')}>
               {lastText || "Hozircha xabarlar yo'q"}
             </p>
           </div>

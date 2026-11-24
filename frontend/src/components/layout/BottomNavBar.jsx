@@ -7,7 +7,6 @@ const BottomNavBar = () => {
   const { currentView, setCurrentView, setIsEditingProfile } = useUiStore();
   const { activeChat, setActiveChat, chats } = useChatStore();
 
-  // Umumiy o'qilmagan xabarlar soni
   const totalUnreadCount = chats?.reduce((acc, c) => acc + (c.unread_count || c.unreadCount || 0), 0) || 0;
 
   const handleSelectTab = (view) => {
@@ -24,21 +23,21 @@ const BottomNavBar = () => {
   };
 
   return (
-    <nav className="lg:hidden shrink-0 w-full bg-telegram-dark border-t border-gray-800/90 px-4 py-1.5 flex items-center justify-around z-30 select-none shadow-lg">
-      {/* 1. Chatlar */}
+    <nav className="lg:hidden shrink-0 w-full bg-[#17212b] border-t border-[#242f3d]/80 px-4 py-2 flex items-center justify-around z-30 select-none shadow-[0_-4px_20px_rgba(0,0,0,0.3)]">
+      {/* Chatlar */}
       <button
         onClick={() => handleSelectTab('chats')}
         className={clsx(
           'flex flex-col items-center justify-center py-1 px-4 rounded-xl transition-all relative',
           currentView === 'chats' && !activeChat
-            ? 'text-telegram-blue'
-            : 'text-gray-400 hover:text-gray-200'
+            ? 'text-[#2aabee]'
+            : 'text-gray-500 hover:text-gray-300'
         )}
       >
         <div className="relative">
           <MessageSquare size={22} strokeWidth={currentView === 'chats' && !activeChat ? 2.4 : 1.8} />
           {totalUnreadCount > 0 && (
-            <span className="absolute -top-1 -right-2.5 bg-telegram-blue text-white text-[10px] font-bold px-1.5 py-0.2 rounded-full min-w-[16px] text-center">
+            <span className="absolute -top-1 -right-2.5 bg-[#2aabee] text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-[16px] text-center leading-none">
               {totalUnreadCount > 99 ? '99+' : totalUnreadCount}
             </span>
           )}
@@ -46,49 +45,49 @@ const BottomNavBar = () => {
         <span
           className={clsx(
             'text-[11px] mt-1 font-medium transition-colors',
-            currentView === 'chats' && !activeChat ? 'text-telegram-blue font-semibold' : 'text-gray-400'
+            currentView === 'chats' && !activeChat ? 'text-[#2aabee] font-semibold' : 'text-gray-500'
           )}
         >
           Chatlar
         </span>
       </button>
 
-      {/* 2. Sozlamalar */}
+      {/* Sozlamalar */}
       <button
         onClick={() => handleSelectTab('settings')}
         className={clsx(
           'flex flex-col items-center justify-center py-1 px-4 rounded-xl transition-all relative',
           currentView === 'settings'
-            ? 'text-telegram-blue'
-            : 'text-gray-400 hover:text-gray-200'
+            ? 'text-[#2aabee]'
+            : 'text-gray-500 hover:text-gray-300'
         )}
       >
         <Settings size={22} strokeWidth={currentView === 'settings' ? 2.4 : 1.8} />
         <span
           className={clsx(
             'text-[11px] mt-1 font-medium transition-colors',
-            currentView === 'settings' ? 'text-telegram-blue font-semibold' : 'text-gray-400'
+            currentView === 'settings' ? 'text-[#2aabee] font-semibold' : 'text-gray-500'
           )}
         >
           Sozlamalar
         </span>
       </button>
 
-      {/* 3. Profil */}
+      {/* Profil */}
       <button
         onClick={() => handleSelectTab('profile')}
         className={clsx(
           'flex flex-col items-center justify-center py-1 px-4 rounded-xl transition-all relative',
           currentView === 'profile'
-            ? 'text-telegram-blue'
-            : 'text-gray-400 hover:text-gray-200'
+            ? 'text-[#2aabee]'
+            : 'text-gray-500 hover:text-gray-300'
         )}
       >
         <User size={22} strokeWidth={currentView === 'profile' ? 2.4 : 1.8} />
         <span
           className={clsx(
             'text-[11px] mt-1 font-medium transition-colors',
-            currentView === 'profile' ? 'text-telegram-blue font-semibold' : 'text-gray-400'
+            currentView === 'profile' ? 'text-[#2aabee] font-semibold' : 'text-gray-500'
           )}
         >
           Profil

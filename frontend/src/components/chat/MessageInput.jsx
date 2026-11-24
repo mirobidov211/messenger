@@ -6,7 +6,6 @@ const MessageInput = ({ onSend, onTyping, editingMessage, onCancelEdit }) => {
   const [text, setText] = useState('');
   const inputRef = useRef(null);
 
-  // Edit rejimiga kirganda inputni to'ldirish
   useEffect(() => {
     if (editingMessage) {
       const content = editingMessage.content || editingMessage.text || '';
@@ -46,13 +45,13 @@ const MessageInput = ({ onSend, onTyping, editingMessage, onCancelEdit }) => {
   };
 
   return (
-    <div className="bg-telegram-dark flex flex-col">
-      {/* Tahrirlash rejimi banner */}
+    <div className="bg-[#17212b] flex flex-col">
+      {/* Edit mode banner */}
       {editingMessage && (
-        <div className="flex items-center justify-between px-4 py-1.5 bg-telegram-surface border-t border-gray-700/60">
+        <div className="flex items-center justify-between px-4 py-2 bg-[#242f3d] border-t border-[#0e1621]/50">
           <div className="flex items-center gap-2 min-w-0">
-            <Pencil size={14} className="text-telegram-blue flex-shrink-0" />
-            <span className="text-telegram-blue text-xs font-medium flex-shrink-0">Tahrirlash</span>
+            <Pencil size={14} className="text-[#2aabee] flex-shrink-0" />
+            <span className="text-[#2aabee] text-xs font-semibold flex-shrink-0">Tahrirlash</span>
             <span className="text-gray-400 text-xs truncate">
               {editingMessage.content || editingMessage.text}
             </span>
@@ -66,13 +65,13 @@ const MessageInput = ({ onSend, onTyping, editingMessage, onCancelEdit }) => {
         </div>
       )}
 
-      {/* Input satri */}
+      {/* Input */}
       <div className="p-3 flex items-end gap-2">
-        <button className="p-2 text-gray-400 hover:text-telegram-blue transition-colors">
+        <button className="p-2 text-gray-500 hover:text-[#2aabee] transition-colors rounded-full hover:bg-[#242f3d]">
           <Paperclip size={22} />
         </button>
-        <div className="flex-1 bg-telegram-surface rounded-xl flex items-center px-2 py-1">
-          <button className="p-2 text-gray-400 hover:text-telegram-blue transition-colors">
+        <div className="flex-1 bg-[#242f3d] rounded-xl flex items-center px-1.5 py-0.5">
+          <button className="p-2 text-gray-500 hover:text-[#2aabee] transition-colors">
             <Smile size={22} />
           </button>
           <textarea
@@ -81,7 +80,7 @@ const MessageInput = ({ onSend, onTyping, editingMessage, onCancelEdit }) => {
             onChange={handleChange}
             onKeyDown={handleKeyDown}
             placeholder={editingMessage ? 'Tahrirlang...' : 'Xabar'}
-            className="flex-1 bg-transparent text-white resize-none max-h-32 focus:outline-none p-2 custom-scrollbar"
+            className="flex-1 bg-transparent text-white resize-none max-h-32 focus:outline-none p-2 text-sm custom-scrollbar placeholder-gray-500"
             rows={1}
             style={{ minHeight: '40px' }}
           />
@@ -89,13 +88,13 @@ const MessageInput = ({ onSend, onTyping, editingMessage, onCancelEdit }) => {
         {text.trim() ? (
           <button
             onClick={handleSend}
-            className="p-3 bg-telegram-blue text-white rounded-full hover:bg-blue-500 transition-colors shadow-lg"
+            className="p-3 bg-[#2aabee] text-white rounded-full hover:bg-[#229ed9] transition-all shadow-lg shadow-[#2aabee]/20 active:scale-95"
           >
-            <Send size={22} className="ml-1" />
+            <Send size={20} className="ml-0.5" />
           </button>
         ) : (
-          <button className="p-3 bg-telegram-surface text-gray-400 rounded-full hover:text-telegram-blue transition-colors">
-            <Mic size={22} />
+          <button className="p-3 bg-[#242f3d] text-gray-500 rounded-full hover:text-[#2aabee] transition-colors">
+            <Mic size={20} />
           </button>
         )}
       </div>

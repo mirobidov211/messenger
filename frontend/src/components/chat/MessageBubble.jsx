@@ -5,15 +5,13 @@ import { formatMessageTime } from '../../utils/formatDate';
 import { Check, CheckCheck, Pencil, Trash2, X } from 'lucide-react';
 
 const MessageBubble = ({ message, isOwn, onEdit, onDelete }) => {
-  const [menu, setMenu] = useState(null); // { x, y } yoki null
+  const [menu, setMenu] = useState(null);
   const menuRef = useRef(null);
   const longPressTimer = useRef(null);
   const bubbleRef = useRef(null);
 
-  // Menyuni yopish
   const closeMenu = useCallback(() => setMenu(null), []);
 
-  // Tashqariga bosganda menyuni yopish
   useEffect(() => {
     if (!menu) return;
     const handleClickOutside = (e) => {
@@ -32,16 +30,12 @@ const MessageBubble = ({ message, isOwn, onEdit, onDelete }) => {
     };
   }, [menu, closeMenu]);
 
-  // Desktop: o'ng tugma bosilganda (right-click)
   const handleContextMenu = (e) => {
-    if (!isOwn) return; // faqat o'z xabarlarimizga
+    if (!isOwn) return;
     e.preventDefault();
-    const x = e.clientX;
-    const y = e.clientY;
-    setMenu({ x, y });
+    setMenu({ x: e.clientX, y: e.clientY });
   };
 
-  // Mobile: uzoq bosish (long-press)
   const handleTouchStart = (e) => {
     if (!isOwn) return;
     const touch = e.touches[0];
@@ -86,36 +80,36 @@ const MessageBubble = ({ message, isOwn, onEdit, onDelete }) => {
         <div
           ref={bubbleRef}
           className={clsx(
-            'max-w-[85%] sm:max-w-[70%] rounded-2xl px-3 py-2 relative select-none',
+            'max-w-[85%] sm:max-w-[70%] rounded-2xl px-3.5 py-2.5 relative select-none shadow-sm',
             isOwn
-              ? 'bg-telegram-message text-white rounded-br-none'
-              : 'bg-telegram-surface text-white rounded-bl-none'
+              ? 'bg-[#2b5278] text-white rounded-br-md'
+              : 'bg-[#182533] text-white rounded-bl-md'
           )}
         >
           {/* Reply */}
           {message.replyTo && (
-            <div className="border-l-2 border-telegram-blue pl-2 mb-1 bg-black bg-opacity-20 rounded p-1 text-sm">
-              <span className="text-telegram-blue font-medium">{message.replyTo.sender}</span>
-              <p className="text-gray-300 truncate">{message.replyTo.text}</p>
+            <div className="border-l-2 border-[#2aabee] pl-2 mb-1.5 bg-black/20 rounded-lg p-1.5 text-sm">
+              <span className="text-[#2aabee] font-medium text-xs">{message.replyTo.sender}</span>
+              <p className="text-gray-300 truncate text-xs">{message.replyTo.text}</p>
             </div>
           )}
 
-          {/* Matn */}
-          <p className="text-sm md:text-base leading-relaxed break-words select-text">{text}</p>
+          {/* Text */}
+          <p className="text-[14px] leading-relaxed break-words select-text">{text}</p>
 
-          {/* Vaqt + o'qildi belgisi + tahrirlangan */}
+          {/* Time + read status */}
           <div className="flex items-center justify-end gap-1 mt-1 flex-wrap">
             {isEdited && (
-              <span className="text-[10px] text-gray-400 italic mr-1">tahrirlangan</span>
+              <span className="text-[10px] text-gray-400/70 italic mr-1">tahrirlangan</span>
             )}
-            <span className="text-[11px] text-gray-400 select-none">
+            <span className="text-[11px] text-gray-400/60 select-none">
               {formatMessageTime(message.created_at || message.createdAt)}
             </span>
             {isOwn && (
               <span
                 className={clsx(
                   'text-[14px]',
-                  message.is_read || message.isRead ? 'text-telegram-blue' : 'text-gray-400'
+                  message.is_read || message.isRead ? 'text-[#2aabee]' : 'text-gray-500'
                 )}
               >
                 {message.is_read || message.isRead ? (
@@ -133,7 +127,7 @@ const MessageBubble = ({ message, isOwn, onEdit, onDelete }) => {
       {menu && isOwn && (
         <div
           ref={menuRef}
-          className="fixed z-50 bg-[#1e2c3a] border border-gray-700 rounded-xl shadow-2xl overflow-hidden min-w-[150px]"
+          className="fixed z-50 bg-[#17212b] border border-[#242f3d] rounded-xl shadow-2xl overflow-hidden min-w-[150px] animate-scale-in"
           style={{
             top: Math.min(menu.y, window.innerHeight - 110),
             left: Math.min(menu.x, window.innerWidth - 170),
@@ -141,23 +135,23 @@ const MessageBubble = ({ message, isOwn, onEdit, onDelete }) => {
         >
           <button
             onClick={handleEdit}
-            className="flex items-center gap-2.5 w-full px-4 py-3 text-sm text-white hover:bg-telegram-surface transition-colors"
+            className="flex items-center gap-2.5 w-full px-4 py-3 text-sm text-white hover:bg-[#242f3d] transition-colors"
           >
-            <Pencil size={15} className="text-telegram-blue" />
+            <Pencil size={15} className="text-[#2aabee]" />
             Tahrirlash
           </button>
-          <div className="h-px bg-gray-700/60" />
+          <div className="h-px bg-[#242f3d]" />
           <button
             onClick={handleDelete}
-            className="flex items-center gap-2.5 w-full px-4 py-3 text-sm text-red-400 hover:bg-telegram-surface transition-colors"
+            className="flex items-center gap-2.5 w-full px-4 py-3 text-sm text-red-400 hover:bg-[#242f3d] transition-colors"
           >
             <Trash2 size={15} />
             O'chirish
           </button>
-          <div className="h-px bg-gray-700/60" />
+          <div className="h-px bg-[#242f3d]" />
           <button
             onClick={closeMenu}
-            className="flex items-center gap-2.5 w-full px-4 py-2 text-xs text-gray-400 hover:bg-telegram-surface transition-colors"
+            className="flex items-center gap-2.5 w-full px-4 py-2 text-xs text-gray-500 hover:bg-[#242f3d] transition-colors"
           >
             <X size={13} />
             Bekor qilish

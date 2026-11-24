@@ -19,7 +19,6 @@ const ChatPage = () => {
         const targetUsername = decodeURIComponent(hash.slice(1)).trim();
         if (!targetUsername) return;
 
-        // 1. Avval mavjud yuklangan chatlardan qidiramiz
         const foundChat = chats.find(
           (c) =>
             c.name?.toLowerCase() === targetUsername.toLowerCase() ||
@@ -32,7 +31,6 @@ const ChatPage = () => {
             setSidebarOpen(false);
           }
         } else if (chats.length > 0) {
-          // 2. Agar mavjud chatlarda topilmasa, backenddan user qidirib chat ochamiz
           try {
             const results = await searchUsersApi(targetUsername);
             const matchingUser = results.find(
@@ -43,7 +41,7 @@ const ChatPage = () => {
               setSidebarOpen(false);
             }
           } catch (e) {
-            console.error('URL dagi username bo‘yicha chat ochishda xatolik:', e);
+            console.error('URL dagi username bo\'yicha chat ochishda xatolik:', e);
           }
         }
       } else if (!hash && activeChat) {
@@ -58,16 +56,16 @@ const ChatPage = () => {
   }, [chats, activeChat, setActiveChat, setSidebarOpen, startChatWithUser]);
 
   return (
-    <div className="h-screen w-full flex flex-col lg:flex-row bg-telegram-darker overflow-hidden text-white relative">
+    <div className="h-screen w-full flex flex-col lg:flex-row bg-[#0e1621] overflow-hidden text-white relative">
       <div className="flex-1 flex overflow-hidden">
         <Sidebar />
         <ChatWindow />
       </div>
 
-      {/* Telefon versiyasida pastki navigatsiya paneli (chat ochilmagan paytda) */}
+      {/* Mobile bottom nav */}
       {!activeChat && <BottomNavBar />}
 
-      {/* Uchta chiziqcha bosilganda ochiladigan Telegram Drawer menyusi */}
+      {/* Drawer menu */}
       <TelegramDrawer
         isOpen={isDrawerOpen}
         onClose={() => setIsDrawerOpen(false)}

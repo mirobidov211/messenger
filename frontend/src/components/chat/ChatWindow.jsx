@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import MessageBubble from './MessageBubble';
 import MessageInput from './MessageInput';
 import { useChats } from '../../hooks/useChats';
@@ -19,35 +19,30 @@ const ChatWindow = () => {
 
   const { sendChatMessage, sendReadReceipt, sendTyping, readyState } = useWebSocket(activeChat?.id);
 
-  // Tahrirlash holati
   const [editingMessage, setEditingMessage] = useState(null);
 
-  // Chapdan o'ngga surish holatlari
+  // Touch/mouse swipe
   const touchStartX = useRef(0);
   const touchStartY = useRef(0);
   const touchDeltaX = useRef(0);
   const mouseStartX = useRef(0);
   const isMouseDown = useRef(false);
 
-  // activeChat o'zgarganda xabarlarni yuklash va o'qilgan deb belgilash
   useEffect(() => {
     if (activeChat?.id) {
       fetchMessages(activeChat.id);
       markAsRead(activeChat.id);
       sendReadReceipt();
     }
-    // Chat o'zgarganda tahrirlashni bekor qilish
     setEditingMessage(null);
   }, [activeChat?.id]);
 
   const chatMessages = messages[String(activeChat?.id)] || messages[activeChat?.id] || [];
 
-  // Yangi xabar kelganda pastga siljitish
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [chatMessages.length]);
 
-  // Hash URL sinxronlash
   useEffect(() => {
     if (activeChat) {
       const username = activeChat.name || activeChat.other_user?.username;
@@ -68,7 +63,6 @@ const ChatWindow = () => {
     }
   };
 
-  // Touch swipe right
   const handleTouchStart = (e) => {
     touchStartX.current = e.touches[0].clientX;
     touchStartY.current = e.touches[0].clientY;
@@ -92,7 +86,6 @@ const ChatWindow = () => {
     touchDeltaX.current = 0;
   };
 
-  // Mouse swipe right (desktop)
   const handleMouseDown = (e) => {
     if (e.target.closest('input, textarea, button')) return;
     isMouseDown.current = true;
@@ -108,12 +101,10 @@ const ChatWindow = () => {
     }
   };
 
-  // Xabar yuborish yoki tahrirlashni saqlash
   const handleSend = async (text) => {
     if (!text || !activeChat) return;
     try {
       if (editingMessage) {
-        // Tahrirlash rejimi
         const updated = await editMessageApi(activeChat.id, editingMessage.id, text);
         updateMessage(activeChat.id, editingMessage.id, {
           content: text,
@@ -122,7 +113,6 @@ const ChatWindow = () => {
         });
         setEditingMessage(null);
       } else {
-        // Yangi xabar
         if (readyState === 1) {
           sendChatMessage(text);
         } else {
@@ -134,7 +124,6 @@ const ChatWindow = () => {
     }
   };
 
-  // Xabarni o'chirish
   const handleDeleteMessage = useCallback(async (message) => {
     if (!activeChat) return;
     try {
@@ -145,21 +134,24 @@ const ChatWindow = () => {
     }
   }, [activeChat, removeMessage]);
 
-  // Xabarni tahrirlashga o'tish
   const handleEditMessage = useCallback((message) => {
     setEditingMessage(message);
   }, []);
 
-  // Tahrirlashni bekor qilish
   const handleCancelEdit = useCallback(() => {
     setEditingMessage(null);
   }, []);
 
   if (!activeChat) {
     return (
-      <div className="hidden lg:flex flex-1 items-center justify-center bg-telegram-darker">
-        <div className="bg-telegram-surface px-4 py-2 rounded-full text-sm text-gray-300 shadow">
-          Xabar yozish uchun chatni tanlang yoki qidiring
+      <div className="hidden lg:flex flex-1 items-center justify-center bg-[#0e1621]">
+        <div className="flex flex-col items-center gap-4 animate-fade-in">
+          <div className="w-20 h-20 rounded-full bg-[#242f3d] flex items-center justify-center shadow-lg">
+            <MessageSquare size={36} className="text-[#2aabee]" />
+          </div>
+          <div className="bg-[#17212b] px-6 py-3 rounded-2xl text-sm text-gray-400 shadow-lg border border-[#242f3d]/50">
+            Xabar yozish uchun chatni tanlang yoki qidiring
+          </div>
         </div>
       </div>
     );
@@ -176,36 +168,36 @@ const ChatWindow = () => {
       onTouchEnd={handleTouchEnd}
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
-      className="flex-1 flex flex-col bg-telegram-darker h-full relative"
+      className="flex-1 flex flex-col bg-[#0e1621] h-full relative"
     >
-      {/* Chat tepa paneli */}
-      <div className="flex items-center justify-between p-3 bg-telegram-dark border-b border-gray-800">
+      {/* Chat header */}
+      <div className="flex items-center justify-between px-4 py-3 bg-[#17212b] border-b border-[#0e1621]/80 shadow-sm">
         <div className="flex items-center gap-3">
-          <button onClick={handleBack} className="lg:hidden text-gray-400 hover:text-white p-1">
+          <button onClick={handleBack} className="lg:hidden text-gray-400 hover:text-white p-1.5 rounded-full hover:bg-[#242f3d] transition-all">
             <ArrowLeft size={22} />
           </button>
           <Avatar alt={displayName} src={avatarSrc} online={isOnline} size="sm" />
           <div>
-            <h2 className="text-white font-medium text-sm leading-tight">{displayName}</h2>
-            <p className="text-telegram-blue text-xs" data-testid="chat-status">
+            <h2 className="text-white font-semibold text-sm leading-tight">{displayName}</h2>
+            <p className="text-[#2aabee] text-xs font-medium" data-testid="chat-status">
               {isOnline ? 'online' : 'yaqinda online edi'}
             </p>
           </div>
         </div>
-        <button className="text-gray-400 hover:text-white p-2 rounded-full hover:bg-telegram-surface transition-colors">
+        <button className="text-gray-400 hover:text-white p-2 rounded-full hover:bg-[#242f3d] transition-all">
           <MoreVertical size={20} />
         </button>
       </div>
 
-      {/* Xabarlar ro'yxati */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-[#0E1621] custom-scrollbar flex flex-col">
+      {/* Messages */}
+      <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-[#0e1621] custom-scrollbar flex flex-col">
         {chatMessages.length === 0 ? (
-          <div className="m-auto flex flex-col items-center justify-center text-center p-6 bg-telegram-surface/40 rounded-2xl max-w-xs border border-gray-800/60 shadow-lg">
-            <div className="w-12 h-12 rounded-full bg-telegram-surface flex items-center justify-center mb-2.5 text-telegram-blue">
-              <MessageSquare size={24} />
+          <div className="m-auto flex flex-col items-center justify-center text-center p-6 bg-[#17212b]/60 rounded-2xl max-w-xs border border-[#242f3d]/50 shadow-lg backdrop-blur-sm">
+            <div className="w-14 h-14 rounded-full bg-[#242f3d] flex items-center justify-center mb-3 text-[#2aabee] shadow-inner">
+              <MessageSquare size={26} />
             </div>
-            <h3 className="text-white font-medium text-sm">Hozircha xabarlar yo'q</h3>
-            <p className="text-gray-400 text-xs mt-1">
+            <h3 className="text-white font-semibold text-sm">Hozircha xabarlar yo'q</h3>
+            <p className="text-gray-500 text-xs mt-1.5">
               Birinchi bo'lib salom deb yozing va suhbatni boshlang!
             </p>
           </div>
@@ -232,7 +224,7 @@ const ChatWindow = () => {
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Xabar kiritish maydoni */}
+      {/* Message input */}
       <MessageInput
         onSend={handleSend}
         onTyping={sendTyping}
