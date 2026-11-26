@@ -2,12 +2,12 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 const Button = ({ children, onClick, type = 'button', variant = 'primary', className, disabled }) => {
-  const baseClasses = 'px-4 py-2 rounded-md font-medium transition-colors focus:outline-none';
+  const baseClasses = 'px-4 py-2.5 rounded-xl font-medium transition-all focus:outline-none active:scale-[0.98]';
   const variants = {
-    primary: 'bg-telegram-blue text-white hover:bg-blue-600',
-    secondary: 'bg-telegram-surface text-white hover:bg-telegram-message',
-    danger: 'bg-red-500 text-white hover:bg-red-600',
-    ghost: 'bg-transparent text-white hover:bg-telegram-surface'
+    primary: 'bg-[#2aabee] text-white hover:bg-[#229ed9] shadow-sm shadow-[#2aabee]/20',
+    secondary: 'bg-[#242f3d] text-white hover:bg-[#2b3a4a]',
+    danger: 'bg-red-500 text-white hover:bg-red-600 shadow-sm shadow-red-500/20',
+    ghost: 'bg-transparent text-white hover:bg-[#242f3d]'
   };
 
   return (

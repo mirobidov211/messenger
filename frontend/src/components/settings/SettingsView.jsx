@@ -1,17 +1,8 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
-  ArrowLeft,
-  Bell,
-  Lock,
-  Globe,
-  Moon,
-  LogOut,
-  User,
-  ChevronRight,
-  Shield,
-  Palette,
-  Volume2
+  ArrowLeft, Bell, Lock, Globe, Moon, LogOut, User,
+  ChevronRight, Shield, Palette, Volume2
 } from 'lucide-react';
 import { useAuthStore } from '../../store/authStore';
 import { useUiStore } from '../../store/uiStore';
@@ -42,33 +33,26 @@ const SettingsView = ({ onBack }) => {
   };
 
   const handleBack = () => {
-    if (onBack) {
-      onBack();
-    } else {
-      setCurrentView('chats');
-    }
+    if (onBack) onBack();
+    else setCurrentView('chats');
   };
 
   return (
-    <div className="w-full h-full flex flex-col bg-telegram-dark select-none overflow-hidden animate-in fade-in duration-150">
-      {/* Yuqori Panel (Header) */}
-      <div className="h-14 px-4 bg-telegram-surface border-b border-gray-800 flex items-center gap-3 shrink-0">
-        <button
-          onClick={handleBack}
-          className="p-2 -ml-2 text-gray-300 hover:text-white rounded-full hover:bg-white/10 transition-colors"
-          title="Ortga"
-        >
+    <div className="w-full h-full flex flex-col bg-[#17212b] select-none overflow-hidden animate-fade-in">
+      {/* Header */}
+      <div className="h-14 px-4 bg-[#242f3d] border-b border-[#0e1621] flex items-center gap-3 shrink-0">
+        <button onClick={handleBack} className="p-2 -ml-2 text-gray-400 hover:text-white rounded-full hover:bg-white/10 transition-colors">
           <ArrowLeft size={22} />
         </button>
         <h2 className="text-white font-semibold text-base">Sozlamalar</h2>
       </div>
 
-      {/* Asosiy Sozlamalar Ro'yxati */}
+      {/* Settings List */}
       <div className="flex-1 overflow-y-auto custom-scrollbar p-3 space-y-4">
-        {/* Foydalanuvchi qisqacha ma'lumoti */}
+        {/* User card */}
         <div
           onClick={() => handleGoToProfile(false)}
-          className="p-4 bg-telegram-surface/80 hover:bg-telegram-surface border border-gray-800/80 rounded-2xl flex items-center justify-between cursor-pointer transition-all group shadow-md"
+          className="p-4 bg-[#242f3d]/70 hover:bg-[#242f3d] border border-[#0e1621]/60 rounded-2xl flex items-center justify-between cursor-pointer transition-all group shadow-md"
         >
           <div className="flex items-center gap-3.5 min-w-0">
             <Avatar
@@ -76,138 +60,121 @@ const SettingsView = ({ onBack }) => {
               src={currentUser?.avatar}
               size="lg"
               online={true}
-              className="ring-2 ring-telegram-blue/40 group-hover:ring-telegram-blue transition-all shrink-0"
+              className="ring-2 ring-[#2aabee]/40 group-hover:ring-[#2aabee] transition-all shrink-0"
             />
             <div className="min-w-0">
-              <h3 className="font-semibold text-white text-base truncate group-hover:text-telegram-blue transition-colors">
+              <h3 className="font-semibold text-white text-base truncate group-hover:text-[#2aabee] transition-colors">
                 {displayName}
               </h3>
-              <p className="text-gray-400 text-xs truncate mt-0.5">
-                {username || currentUser?.email || 'Profilni ko‘rish'}
+              <p className="text-gray-500 text-xs truncate mt-0.5">
+                {username || currentUser?.email || 'Profilni ko\'rish'}
               </p>
             </div>
           </div>
-          <ChevronRight size={18} className="text-gray-500 group-hover:text-white transition-colors shrink-0" />
+          <ChevronRight size={18} className="text-gray-600 group-hover:text-white transition-colors shrink-0" />
         </div>
 
-        {/* 1-Bo'lim: Hisob va Profil */}
-        <div className="bg-telegram-surface/60 border border-gray-800/70 rounded-2xl overflow-hidden divide-y divide-gray-800/60 shadow-md">
-          <div className="px-4 py-2.5 text-[11px] font-semibold text-telegram-blue uppercase tracking-wider">
+        {/* Account section */}
+        <div className="bg-[#242f3d]/50 border border-[#0e1621]/60 rounded-2xl overflow-hidden divide-y divide-[#0e1621]/50 shadow-md">
+          <div className="px-4 py-2.5 text-[11px] font-semibold text-[#2aabee] uppercase tracking-wider">
             Hisob
           </div>
-
           <button
             onClick={() => handleGoToProfile(true)}
-            className="w-full p-3.5 flex items-center justify-between hover:bg-telegram-surface transition-colors text-left group"
+            className="w-full p-3.5 flex items-center justify-between hover:bg-[#242f3d] transition-colors text-left group"
           >
             <div className="flex items-center gap-3.5">
-              <div className="p-2 rounded-xl bg-blue-500/10 text-telegram-blue">
-                <User size={18} />
-              </div>
-              <span className="text-sm font-medium text-gray-200 group-hover:text-white">
-                Profilni tahrirlash
-              </span>
+              <div className="p-2 rounded-xl bg-blue-500/10 text-[#2aabee]"><User size={18} /></div>
+              <span className="text-sm font-medium text-gray-300 group-hover:text-white">Profilni tahrirlash</span>
             </div>
-            <ChevronRight size={16} className="text-gray-500" />
+            <ChevronRight size={16} className="text-gray-600" />
           </button>
         </div>
 
-        {/* 2-Bo'lim: Bildirishnomalar va Ovozlar */}
-        <div className="bg-telegram-surface/60 border border-gray-800/70 rounded-2xl overflow-hidden divide-y divide-gray-800/60 shadow-md">
-          <div className="px-4 py-2.5 text-[11px] font-semibold text-telegram-blue uppercase tracking-wider">
+        {/* Notifications section */}
+        <div className="bg-[#242f3d]/50 border border-[#0e1621]/60 rounded-2xl overflow-hidden divide-y divide-[#0e1621]/50 shadow-md">
+          <div className="px-4 py-2.5 text-[11px] font-semibold text-[#2aabee] uppercase tracking-wider">
             Bildirishnomalar
           </div>
 
-          <div className="p-3.5 flex items-center justify-between hover:bg-telegram-surface transition-colors">
+          <div className="p-3.5 flex items-center justify-between hover:bg-[#242f3d] transition-colors">
             <div className="flex items-center gap-3.5">
-              <div className="p-2 rounded-xl bg-purple-500/10 text-purple-400">
-                <Bell size={18} />
-              </div>
+              <div className="p-2 rounded-xl bg-purple-500/10 text-purple-400"><Bell size={18} /></div>
               <div>
-                <span className="text-sm font-medium text-gray-200 block">Xabarlar bildirishnomasi</span>
-                <span className="text-xs text-gray-400">Yangi xabarlarni ko'rsatish</span>
+                <span className="text-sm font-medium text-gray-300 block">Xabarlar bildirishnomasi</span>
+                <span className="text-xs text-gray-500">Yangi xabarlarni ko'rsatish</span>
               </div>
             </div>
             <button
               onClick={() => setNotificationsEnabled(!notificationsEnabled)}
               className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                notificationsEnabled ? 'bg-telegram-blue' : 'bg-gray-700'
+                notificationsEnabled ? 'bg-[#2aabee]' : 'bg-gray-700'
               }`}
             >
-              <span
-                className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                  notificationsEnabled ? 'translate-x-6' : 'translate-x-1'
-                }`}
-              />
+              <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                notificationsEnabled ? 'translate-x-6' : 'translate-x-1'
+              }`} />
             </button>
           </div>
 
-          <div className="p-3.5 flex items-center justify-between hover:bg-telegram-surface transition-colors">
+          <div className="p-3.5 flex items-center justify-between hover:bg-[#242f3d] transition-colors">
             <div className="flex items-center gap-3.5">
-              <div className="p-2 rounded-xl bg-emerald-500/10 text-emerald-400">
-                <Volume2 size={18} />
-              </div>
+              <div className="p-2 rounded-xl bg-emerald-500/10 text-emerald-400"><Volume2 size={18} /></div>
               <div>
-                <span className="text-sm font-medium text-gray-200 block">Xabar ovozlari</span>
-                <span className="text-xs text-gray-400">Yangi xabar kelganda ovoz chiqarish</span>
+                <span className="text-sm font-medium text-gray-300 block">Xabar ovozlari</span>
+                <span className="text-xs text-gray-500">Yangi xabar kelganda ovoz chiqarish</span>
               </div>
             </div>
             <button
               onClick={() => setSoundsEnabled(!soundsEnabled)}
               className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                soundsEnabled ? 'bg-telegram-blue' : 'bg-gray-700'
+                soundsEnabled ? 'bg-[#2aabee]' : 'bg-gray-700'
               }`}
             >
-              <span
-                className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                  soundsEnabled ? 'translate-x-6' : 'translate-x-1'
-                }`}
-              />
+              <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                soundsEnabled ? 'translate-x-6' : 'translate-x-1'
+              }`} />
             </button>
           </div>
         </div>
 
-        {/* 3-Bo'lim: Umumiy sozlamalar (Til va Xavfsizlik) */}
-        <div className="bg-telegram-surface/60 border border-gray-800/70 rounded-2xl overflow-hidden divide-y divide-gray-800/60 shadow-md">
-          <div className="px-4 py-2.5 text-[11px] font-semibold text-telegram-blue uppercase tracking-wider">
+        {/* General section */}
+        <div className="bg-[#242f3d]/50 border border-[#0e1621]/60 rounded-2xl overflow-hidden divide-y divide-[#0e1621]/50 shadow-md">
+          <div className="px-4 py-2.5 text-[11px] font-semibold text-[#2aabee] uppercase tracking-wider">
             Umumiy
           </div>
 
           <div
             onClick={() => setShowLanguageModal(!showLanguageModal)}
-            className="p-3.5 flex items-center justify-between hover:bg-telegram-surface cursor-pointer transition-colors group"
+            className="p-3.5 flex items-center justify-between hover:bg-[#242f3d] cursor-pointer transition-colors group"
           >
             <div className="flex items-center gap-3.5">
-              <div className="p-2 rounded-xl bg-amber-500/10 text-amber-400">
-                <Globe size={18} />
-              </div>
+              <div className="p-2 rounded-xl bg-amber-500/10 text-amber-400"><Globe size={18} /></div>
               <div>
-                <span className="text-sm font-medium text-gray-200 block">Til</span>
-                <span className="text-xs text-telegram-blue">{selectedLanguage}</span>
+                <span className="text-sm font-medium text-gray-300 block">Til</span>
+                <span className="text-xs text-[#2aabee]">{selectedLanguage}</span>
               </div>
             </div>
-            <ChevronRight size={16} className="text-gray-500" />
+            <ChevronRight size={16} className="text-gray-600" />
           </div>
 
-          <div className="p-3.5 flex items-center justify-between hover:bg-telegram-surface cursor-pointer transition-colors group">
+          <div className="p-3.5 flex items-center justify-between hover:bg-[#242f3d] cursor-pointer transition-colors group">
             <div className="flex items-center gap-3.5">
-              <div className="p-2 rounded-xl bg-red-500/10 text-red-400">
-                <Shield size={18} />
-              </div>
+              <div className="p-2 rounded-xl bg-red-500/10 text-red-400"><Shield size={18} /></div>
               <div>
-                <span className="text-sm font-medium text-gray-200 block">Maxfiylik va Xavfsizlik</span>
-                <span className="text-xs text-gray-400">Faol seanslar, bloklanganlar</span>
+                <span className="text-sm font-medium text-gray-300 block">Maxfiylik va Xavfsizlik</span>
+                <span className="text-xs text-gray-500">Faol seanslar, bloklanganlar</span>
               </div>
             </div>
-            <ChevronRight size={16} className="text-gray-500" />
+            <ChevronRight size={16} className="text-gray-600" />
           </div>
         </div>
 
-        {/* Chiqish tugmasi */}
+        {/* Logout */}
         <div className="pt-2">
           <button
             onClick={handleLogout}
-            className="w-full py-3 px-4 bg-red-500/10 hover:bg-red-500/20 text-red-400 font-medium rounded-xl flex items-center justify-center gap-2 border border-red-500/20 transition-all active:scale-[0.99]"
+            className="w-full py-3 px-4 bg-red-500/10 hover:bg-red-500/20 text-red-400 font-medium rounded-xl flex items-center justify-center gap-2 border border-red-500/15 transition-all active:scale-[0.99]"
           >
             <LogOut size={18} />
             <span>Hisobdan chiqish</span>
@@ -215,27 +182,18 @@ const SettingsView = ({ onBack }) => {
         </div>
       </div>
 
-      {/* Til tanlash modali */}
+      {/* Language modal */}
       {showLanguageModal && (
-        <div
-          onClick={() => setShowLanguageModal(false)}
-          className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4 backdrop-blur-xs"
-        >
-          <div
-            onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-xs bg-telegram-surface border border-gray-800 rounded-2xl p-4 shadow-2xl space-y-2 animate-in zoom-in-95 duration-150"
-          >
+        <div onClick={() => setShowLanguageModal(false)} className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4 backdrop-blur-[2px]">
+          <div onClick={(e) => e.stopPropagation()} className="w-full max-w-xs bg-[#242f3d] border border-[#0e1621] rounded-2xl p-4 shadow-2xl space-y-2 animate-scale-in">
             <h3 className="text-white font-semibold text-sm mb-3">Tilni tanlang</h3>
             {["O'zbekcha", 'Русский', 'English'].map((lang) => (
               <button
                 key={lang}
-                onClick={() => {
-                  setSelectedLanguage(lang);
-                  setShowLanguageModal(false);
-                }}
-                className={`w-full py-2 px-3 rounded-xl text-left text-sm flex items-center justify-between transition-colors ${
+                onClick={() => { setSelectedLanguage(lang); setShowLanguageModal(false); }}
+                className={`w-full py-2.5 px-3 rounded-xl text-left text-sm flex items-center justify-between transition-colors ${
                   selectedLanguage === lang
-                    ? 'bg-telegram-blue text-white font-medium'
+                    ? 'bg-[#2aabee] text-white font-medium'
                     : 'text-gray-300 hover:bg-white/5'
                 }`}
               >
@@ -250,8 +208,5 @@ const SettingsView = ({ onBack }) => {
   );
 };
 
-SettingsView.propTypes = {
-  onBack: PropTypes.func,
-};
-
+SettingsView.propTypes = { onBack: PropTypes.func };
 export default SettingsView;
