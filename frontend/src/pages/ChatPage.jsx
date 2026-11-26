@@ -56,7 +56,7 @@ const ChatPage = () => {
   }, [chats, activeChat, setActiveChat, setSidebarOpen, startChatWithUser]);
 
   return (
-    <div className="h-screen w-full flex flex-col lg:flex-row bg-[#0e1621] overflow-hidden text-white relative">
+    <div className="h-screen w-full flex flex-col lg:flex-row theme-app-bg overflow-hidden relative">
       <div className="flex-1 flex overflow-hidden">
         <Sidebar />
         <ChatWindow />

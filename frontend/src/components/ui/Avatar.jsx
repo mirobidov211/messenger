@@ -38,7 +38,6 @@ const Avatar = ({ src, alt, size = 'md', online, className }) => {
     return name ? name.charAt(0).toUpperCase() : '?';
   };
 
-  // Generate consistent color based on name
   const getGradient = (name) => {
     const colors = [
       'from-blue-400 to-blue-600',
@@ -73,7 +72,7 @@ const Avatar = ({ src, alt, size = 'md', online, className }) => {
       )}
       {online && (
         <span className={clsx(
-          'absolute bottom-0 right-0 bg-green-500 rounded-full border-[#17212b]',
+          'absolute bottom-0 right-0 bg-green-500 rounded-full border-white dark:border-[#17212b]',
           onlineDotSizes[size] || onlineDotSizes.md
         )}></span>
       )}

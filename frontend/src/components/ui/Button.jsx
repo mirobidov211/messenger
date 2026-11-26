@@ -5,9 +5,9 @@ const Button = ({ children, onClick, type = 'button', variant = 'primary', class
   const baseClasses = 'px-4 py-2.5 rounded-xl font-medium transition-all focus:outline-none active:scale-[0.98]';
   const variants = {
     primary: 'bg-[#2aabee] text-white hover:bg-[#229ed9] shadow-sm shadow-[#2aabee]/20',
-    secondary: 'bg-[#242f3d] text-white hover:bg-[#2b3a4a]',
+    secondary: 'bg-gray-100 dark:bg-[#242f3d] text-gray-800 dark:text-white hover:bg-gray-200 dark:hover:bg-[#2b3a4a]',
     danger: 'bg-red-500 text-white hover:bg-red-600 shadow-sm shadow-red-500/20',
-    ghost: 'bg-transparent text-white hover:bg-[#242f3d]'
+    ghost: 'bg-transparent text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-[#242f3d]'
   };
 
   return (

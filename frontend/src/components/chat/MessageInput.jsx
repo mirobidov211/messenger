@@ -45,20 +45,20 @@ const MessageInput = ({ onSend, onTyping, editingMessage, onCancelEdit }) => {
   };
 
   return (
-    <div className="bg-[#17212b] flex flex-col">
+    <div className="theme-header border-t theme-border flex flex-col transition-colors duration-200">
       {/* Edit mode banner */}
       {editingMessage && (
-        <div className="flex items-center justify-between px-4 py-2 bg-[#242f3d] border-t border-[#0e1621]/50">
+        <div className="flex items-center justify-between px-4 py-2 theme-surface-secondary border-t theme-border">
           <div className="flex items-center gap-2 min-w-0">
             <Pencil size={14} className="text-[#2aabee] flex-shrink-0" />
             <span className="text-[#2aabee] text-xs font-semibold flex-shrink-0">Tahrirlash</span>
-            <span className="text-gray-400 text-xs truncate">
+            <span className="theme-text-secondary text-xs truncate">
               {editingMessage.content || editingMessage.text}
             </span>
           </div>
           <button
             onClick={handleCancelEdit}
-            className="ml-2 p-1 text-gray-400 hover:text-white transition-colors flex-shrink-0"
+            className="ml-2 p-1 theme-text-muted hover:theme-text-primary transition-colors flex-shrink-0"
           >
             <X size={16} />
           </button>
@@ -67,11 +67,11 @@ const MessageInput = ({ onSend, onTyping, editingMessage, onCancelEdit }) => {
 
       {/* Input */}
       <div className="p-3 flex items-end gap-2">
-        <button className="p-2 text-gray-500 hover:text-[#2aabee] transition-colors rounded-full hover:bg-[#242f3d]">
+        <button className="p-2 theme-text-muted hover:text-[#2aabee] transition-colors rounded-full hover:opacity-80">
           <Paperclip size={22} />
         </button>
-        <div className="flex-1 bg-[#242f3d] rounded-xl flex items-center px-1.5 py-0.5">
-          <button className="p-2 text-gray-500 hover:text-[#2aabee] transition-colors">
+        <div className="flex-1 theme-surface-secondary rounded-xl flex items-center px-1.5 py-0.5">
+          <button className="p-2 theme-text-muted hover:text-[#2aabee] transition-colors">
             <Smile size={22} />
           </button>
           <textarea
@@ -80,7 +80,7 @@ const MessageInput = ({ onSend, onTyping, editingMessage, onCancelEdit }) => {
             onChange={handleChange}
             onKeyDown={handleKeyDown}
             placeholder={editingMessage ? 'Tahrirlang...' : 'Xabar'}
-            className="flex-1 bg-transparent text-white resize-none max-h-32 focus:outline-none p-2 text-sm custom-scrollbar placeholder-gray-500"
+            className="flex-1 bg-transparent theme-text-primary resize-none max-h-32 focus:outline-none p-2 text-sm custom-scrollbar placeholder:opacity-60"
             rows={1}
             style={{ minHeight: '40px' }}
           />
@@ -88,12 +88,12 @@ const MessageInput = ({ onSend, onTyping, editingMessage, onCancelEdit }) => {
         {text.trim() ? (
           <button
             onClick={handleSend}
-            className="p-3 bg-[#2aabee] text-white rounded-full hover:bg-[#229ed9] transition-all shadow-lg shadow-[#2aabee]/20 active:scale-95"
+            className="p-3 bg-[#2aabee] text-white rounded-full hover:bg-[#229ed9] transition-all shadow-md shadow-[#2aabee]/20 active:scale-95 shrink-0"
           >
             <Send size={20} className="ml-0.5" />
           </button>
         ) : (
-          <button className="p-3 bg-[#242f3d] text-gray-500 rounded-full hover:text-[#2aabee] transition-colors">
+          <button className="p-3 theme-surface-secondary theme-text-muted rounded-full hover:text-[#2aabee] transition-colors shrink-0">
             <Mic size={20} />
           </button>
         )}

@@ -28,16 +28,21 @@ const ChatItem = ({ chat, isActive, onClick }) => {
       className={clsx(
         'flex items-center gap-3 p-3 cursor-pointer transition-all select-none',
         isActive
-          ? 'bg-[#2b5278] text-white'
-          : 'hover:bg-[#242f3d] active:bg-[#2b5278]/30'
+          ? 'bg-[#2aabee] text-white shadow-sm'
+          : 'hover:opacity-85 active:opacity-75'
       )}
     >
       <Avatar alt={displayName} src={avatarSrc} online={isOnline} size="md" />
       <div className="flex-1 min-w-0">
         <div className="flex justify-between items-baseline mb-1">
-          <h3 className="font-semibold truncate text-white text-[14px]">{displayName}</h3>
+          <h3 className={clsx(
+            'font-semibold truncate text-[14px]',
+            isActive ? 'text-white' : 'theme-text-primary'
+          )}>
+            {displayName}
+          </h3>
           {lastTime && (
-            <span className={clsx('text-xs shrink-0 ml-2', isActive ? 'text-blue-200' : 'text-gray-500')}>
+            <span className={clsx('text-xs shrink-0 ml-2', isActive ? 'text-blue-100' : 'theme-text-muted')}>
               {lastTime}
             </span>
           )}
@@ -45,11 +50,21 @@ const ChatItem = ({ chat, isActive, onClick }) => {
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-1 min-w-0 mr-2">
             {isOwnLastMsg && (
-              <span className={clsx('shrink-0', isActive ? 'text-blue-200' : lastMsg.is_read || lastMsg.isRead ? 'text-[#2aabee]' : 'text-gray-500')}>
+              <span className={clsx(
+                'shrink-0',
+                isActive
+                  ? 'text-white'
+                  : lastMsg.is_read || lastMsg.isRead
+                  ? 'text-[#2aabee]'
+                  : 'theme-text-muted'
+              )}>
                 {lastMsg.is_read || lastMsg.isRead ? <CheckCheck size={14} /> : <Check size={14} />}
               </span>
             )}
-            <p className={clsx('text-xs truncate', isActive ? 'text-blue-200' : 'text-gray-500')}>
+            <p className={clsx(
+              'text-xs truncate',
+              isActive ? 'text-blue-100' : 'theme-text-secondary'
+            )}>
               {lastText || "Hozircha xabarlar yo'q"}
             </p>
           </div>

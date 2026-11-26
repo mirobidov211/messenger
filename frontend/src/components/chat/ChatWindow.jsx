@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import MessageBubble from './MessageBubble';
 import MessageInput from './MessageInput';
 import { useChats } from '../../hooks/useChats';
-import { ArrowLeft, MoreVertical, MessageSquare } from 'lucide-react';
+import { ArrowLeft, MoreVertical, MessageSquare, Moon, Sun } from 'lucide-react';
 import Avatar from '../ui/Avatar';
 import { useUiStore } from '../../store/uiStore';
 import { useAuthStore } from '../../store/authStore';
@@ -15,6 +15,8 @@ const ChatWindow = () => {
   const { activeChat, setActiveChat, messages, fetchMessages, sendMessage, markAsRead } = useChats();
   const { removeMessage, updateMessage } = useChatStore();
   const setSidebarOpen = useUiStore((state) => state.setSidebarOpen);
+  const isDarkMode = useUiStore((state) => state.isDarkMode);
+  const toggleDarkMode = useUiStore((state) => state.toggleDarkMode);
   const messagesEndRef = useRef(null);
 
   const { sendChatMessage, sendReadReceipt, sendTyping, readyState } = useWebSocket(activeChat?.id);
@@ -144,12 +146,12 @@ const ChatWindow = () => {
 
   if (!activeChat) {
     return (
-      <div className="hidden lg:flex flex-1 items-center justify-center bg-[#0e1621]">
+      <div className="hidden lg:flex flex-1 items-center justify-center theme-chat-area transition-colors duration-200">
         <div className="flex flex-col items-center gap-4 animate-fade-in">
-          <div className="w-20 h-20 rounded-full bg-[#242f3d] flex items-center justify-center shadow-lg">
+          <div className="w-20 h-20 rounded-full theme-surface flex items-center justify-center shadow-lg border theme-border">
             <MessageSquare size={36} className="text-[#2aabee]" />
           </div>
-          <div className="bg-[#17212b] px-6 py-3 rounded-2xl text-sm text-gray-400 shadow-lg border border-[#242f3d]/50">
+          <div className="theme-surface px-6 py-3 rounded-2xl text-sm theme-text-secondary shadow-lg border theme-border">
             Xabar yozish uchun chatni tanlang yoki qidiring
           </div>
         </div>
@@ -168,36 +170,45 @@ const ChatWindow = () => {
       onTouchEnd={handleTouchEnd}
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
-      className="flex-1 flex flex-col bg-[#0e1621] h-full relative"
+      className="flex-1 flex flex-col theme-chat-area h-full relative transition-colors duration-200"
     >
       {/* Chat header */}
-      <div className="flex items-center justify-between px-4 py-3 bg-[#17212b] border-b border-[#0e1621]/80 shadow-sm">
+      <div className="flex items-center justify-between px-4 py-3 theme-header border-b theme-border shadow-sm transition-colors duration-200">
         <div className="flex items-center gap-3">
-          <button onClick={handleBack} className="lg:hidden text-gray-400 hover:text-white p-1.5 rounded-full hover:bg-[#242f3d] transition-all">
+          <button onClick={handleBack} className="lg:hidden theme-text-secondary hover:theme-text-primary p-1.5 rounded-full hover:opacity-80 transition-all">
             <ArrowLeft size={22} />
           </button>
           <Avatar alt={displayName} src={avatarSrc} online={isOnline} size="sm" />
           <div>
-            <h2 className="text-white font-semibold text-sm leading-tight">{displayName}</h2>
+            <h2 className="theme-text-primary font-semibold text-sm leading-tight">{displayName}</h2>
             <p className="text-[#2aabee] text-xs font-medium" data-testid="chat-status">
               {isOnline ? 'online' : 'yaqinda online edi'}
             </p>
           </div>
         </div>
-        <button className="text-gray-400 hover:text-white p-2 rounded-full hover:bg-[#242f3d] transition-all">
-          <MoreVertical size={20} />
-        </button>
+        <div className="flex items-center gap-1">
+          <button
+            onClick={() => toggleDarkMode()}
+            className="p-2 theme-text-secondary hover:text-[#2aabee] rounded-full hover:opacity-80 transition-all active:scale-95"
+            title={isDarkMode ? "Kunduzgi rejim (Oq)" : "Tungi rejim (Qora)"}
+          >
+            {isDarkMode ? <Sun size={20} className="text-amber-400" /> : <Moon size={20} className="text-gray-600" />}
+          </button>
+          <button className="theme-text-secondary hover:theme-text-primary p-2 rounded-full hover:opacity-80 transition-all">
+            <MoreVertical size={20} />
+          </button>
+        </div>
       </div>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-[#0e1621] custom-scrollbar flex flex-col">
+      <div className="flex-1 overflow-y-auto p-4 space-y-3 custom-scrollbar flex flex-col">
         {chatMessages.length === 0 ? (
-          <div className="m-auto flex flex-col items-center justify-center text-center p-6 bg-[#17212b]/60 rounded-2xl max-w-xs border border-[#242f3d]/50 shadow-lg backdrop-blur-sm">
-            <div className="w-14 h-14 rounded-full bg-[#242f3d] flex items-center justify-center mb-3 text-[#2aabee] shadow-inner">
+          <div className="m-auto flex flex-col items-center justify-center text-center p-6 theme-surface rounded-2xl max-w-xs border theme-border shadow-md">
+            <div className="w-14 h-14 rounded-full theme-surface-secondary flex items-center justify-center mb-3 text-[#2aabee] shadow-inner">
               <MessageSquare size={26} />
             </div>
-            <h3 className="text-white font-semibold text-sm">Hozircha xabarlar yo'q</h3>
-            <p className="text-gray-500 text-xs mt-1.5">
+            <h3 className="theme-text-primary font-semibold text-sm">Hozircha xabarlar yo'q</h3>
+            <p className="theme-text-muted text-xs mt-1.5">
               Birinchi bo'lib salom deb yozing va suhbatni boshlang!
             </p>
           </div>

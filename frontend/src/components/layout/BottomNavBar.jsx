@@ -23,7 +23,7 @@ const BottomNavBar = () => {
   };
 
   return (
-    <nav className="lg:hidden shrink-0 w-full bg-[#17212b] border-t border-[#242f3d]/80 px-4 py-2 flex items-center justify-around z-30 select-none shadow-[0_-4px_20px_rgba(0,0,0,0.3)]">
+    <nav className="lg:hidden shrink-0 w-full theme-header border-t theme-border px-4 py-2 flex items-center justify-around z-30 select-none shadow-lg transition-colors duration-200">
       {/* Chatlar */}
       <button
         onClick={() => handleSelectTab('chats')}
@@ -31,7 +31,7 @@ const BottomNavBar = () => {
           'flex flex-col items-center justify-center py-1 px-4 rounded-xl transition-all relative',
           currentView === 'chats' && !activeChat
             ? 'text-[#2aabee]'
-            : 'text-gray-500 hover:text-gray-300'
+            : 'theme-text-muted hover:theme-text-primary'
         )}
       >
         <div className="relative">
@@ -45,7 +45,7 @@ const BottomNavBar = () => {
         <span
           className={clsx(
             'text-[11px] mt-1 font-medium transition-colors',
-            currentView === 'chats' && !activeChat ? 'text-[#2aabee] font-semibold' : 'text-gray-500'
+            currentView === 'chats' && !activeChat ? 'text-[#2aabee] font-semibold' : 'theme-text-muted'
           )}
         >
           Chatlar
@@ -59,14 +59,14 @@ const BottomNavBar = () => {
           'flex flex-col items-center justify-center py-1 px-4 rounded-xl transition-all relative',
           currentView === 'settings'
             ? 'text-[#2aabee]'
-            : 'text-gray-500 hover:text-gray-300'
+            : 'theme-text-muted hover:theme-text-primary'
         )}
       >
         <Settings size={22} strokeWidth={currentView === 'settings' ? 2.4 : 1.8} />
         <span
           className={clsx(
             'text-[11px] mt-1 font-medium transition-colors',
-            currentView === 'settings' ? 'text-[#2aabee] font-semibold' : 'text-gray-500'
+            currentView === 'settings' ? 'text-[#2aabee] font-semibold' : 'theme-text-muted'
           )}
         >
           Sozlamalar
@@ -80,14 +80,14 @@ const BottomNavBar = () => {
           'flex flex-col items-center justify-center py-1 px-4 rounded-xl transition-all relative',
           currentView === 'profile'
             ? 'text-[#2aabee]'
-            : 'text-gray-500 hover:text-gray-300'
+            : 'theme-text-muted hover:theme-text-primary'
         )}
       >
         <User size={22} strokeWidth={currentView === 'profile' ? 2.4 : 1.8} />
         <span
           className={clsx(
             'text-[11px] mt-1 font-medium transition-colors',
-            currentView === 'profile' ? 'text-[#2aabee] font-semibold' : 'text-gray-500'
+            currentView === 'profile' ? 'text-[#2aabee] font-semibold' : 'theme-text-muted'
           )}
         >
           Profil

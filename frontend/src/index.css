@@ -16,10 +16,125 @@ html, body, #root {
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background-color: #0E1621;
+  background-color: #f4f6f8;
+  color: #111827;
   overflow: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+html.dark body {
+  background-color: #0E1621;
+  color: #ffffff;
+}
+
+/* ====== Dynamic Theme Variables & Classes ====== */
+:root {
+  --bg-app: #f0f2f5;
+  --bg-sidebar: #ffffff;
+  --bg-header: #ffffff;
+  --bg-surface: #ffffff;
+  --bg-surface-secondary: #f3f4f6;
+  --bg-chat-area: #eef2f5;
+  --bg-bubble-incoming: #ffffff;
+  --text-primary: #111827;
+  --text-secondary: #4b5563;
+  --text-muted: #9ca3af;
+  --border-subtle: #e5e7eb;
+  --border-strong: #d1d5db;
+  --input-bg: #f3f4f6;
+  --drawer-bg: #ffffff;
+  --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+html.dark {
+  --bg-app: #0e1621;
+  --bg-sidebar: #17212b;
+  --bg-header: #17212b;
+  --bg-surface: #17212b;
+  --bg-surface-secondary: #242f3d;
+  --bg-chat-area: #0e1621;
+  --bg-bubble-incoming: #182533;
+  --text-primary: #ffffff;
+  --text-secondary: #9ca3af;
+  --text-muted: #64748b;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.15);
+  --input-bg: #242f3d;
+  --drawer-bg: #17212b;
+  --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.theme-app-bg {
+  background-color: var(--bg-app);
+  color: var(--text-primary);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.theme-sidebar {
+  background-color: var(--bg-sidebar);
+  border-color: var(--border-subtle);
+  color: var(--text-primary);
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.theme-header {
+  background-color: var(--bg-header);
+  border-color: var(--border-subtle);
+  color: var(--text-primary);
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.theme-chat-area {
+  background-color: var(--bg-chat-area);
+  transition: background-color 0.2s ease;
+}
+
+.theme-surface {
+  background-color: var(--bg-surface);
+  border-color: var(--border-subtle);
+  color: var(--text-primary);
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.theme-surface-secondary {
+  background-color: var(--bg-surface-secondary);
+  color: var(--text-primary);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.theme-input {
+  background-color: var(--input-bg);
+  border-color: var(--border-subtle);
+  color: var(--text-primary);
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.theme-input::placeholder {
+  color: var(--text-muted);
+}
+
+.theme-drawer {
+  background-color: var(--drawer-bg);
+  border-color: var(--border-subtle);
+  color: var(--text-primary);
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.theme-text-primary {
+  color: var(--text-primary);
+}
+
+.theme-text-secondary {
+  color: var(--text-secondary);
+}
+
+.theme-text-muted {
+  color: var(--text-muted);
+}
+
+.theme-border {
+  border-color: var(--border-subtle);
 }
 
 /* ====== Custom Scrollbar ====== */
@@ -30,11 +145,11 @@ body {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,0.12);
+  background: rgba(0,0,0,0.15);
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255,255,255,0.2);
+  background: rgba(0,0,0,0.25);
 }
 
 .custom-scrollbar::-webkit-scrollbar {
@@ -44,18 +159,37 @@ body {
   background: transparent;
 }
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,0.08);
+  background: rgba(0,0,0,0.12);
   border-radius: 3px;
 }
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(0,0,0,0.2);
+}
+
+/* Dark mode scrollbar */
+html.dark ::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.12);
+}
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: rgba(255,255,255,0.2);
+}
+html.dark .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.08);
+}
+html.dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: rgba(255,255,255,0.15);
 }
 
 /* ====== Auth Pages Background ====== */
 .auth-bg {
-  background: linear-gradient(135deg, #1a8fe3 0%, #2196F3 25%, #1e88e5 50%, #1976d2 75%, #1565c0 100%);
+  background: linear-gradient(135deg, #e8f0fe 0%, #f1f5f9 40%, #e2e8f0 100%);
   position: relative;
   overflow: hidden;
+  transition: background 0.3s ease;
+}
+
+html.dark .auth-bg {
+  background: linear-gradient(135deg, #090e15 0%, #0e1621 50%, #17212b 100%);
 }
 
 .auth-bg::before {
@@ -65,9 +199,13 @@ body {
   right: -30%;
   width: 80%;
   height: 80%;
-  background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(42,171,238,0.1) 0%, transparent 70%);
   border-radius: 50%;
   animation: floatBlob1 8s ease-in-out infinite;
+}
+
+html.dark .auth-bg::before {
+  background: radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%);
 }
 
 .auth-bg::after {
@@ -77,9 +215,13 @@ body {
   left: -20%;
   width: 70%;
   height: 70%;
-  background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(42,171,238,0.08) 0%, transparent 70%);
   border-radius: 50%;
   animation: floatBlob2 10s ease-in-out infinite;
+}
+
+html.dark .auth-bg::after {
+  background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%);
 }
 
 @keyframes floatBlob1 {
@@ -98,8 +240,12 @@ body {
 .auth-circle {
   position: absolute;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(42, 171, 238, 0.08);
   pointer-events: none;
+}
+
+html.dark .auth-circle {
+  background: rgba(255, 255, 255, 0.04);
 }
 
 .auth-circle-1 {
@@ -148,9 +294,17 @@ body {
 .auth-card {
   background: #ffffff;
   border-radius: 24px;
-  box-shadow: 0 25px 60px rgba(0,0,0,0.15), 0 8px 20px rgba(0,0,0,0.08);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.04);
   position: relative;
   z-index: 10;
+  border: 1px solid rgba(0,0,0,0.06);
+  transition: all 0.3s ease;
+}
+
+html.dark .auth-card {
+  background: #17212b;
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 25px 60px rgba(0,0,0,0.6);
 }
 
 /* ====== Auth Input ====== */
@@ -170,14 +324,30 @@ body {
   outline: none;
 }
 
+html.dark .auth-input {
+  background: #242f3d;
+  border-color: rgba(255,255,255,0.08);
+  color: #ffffff;
+}
+
 .auth-input::placeholder {
   color: #94a3b8;
 }
 
+html.dark .auth-input::placeholder {
+  color: #64748b;
+}
+
 .auth-input:focus {
-  border-color: #3b82f6;
+  border-color: #2aabee;
   background: #ffffff;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  box-shadow: 0 0 0 3px rgba(42, 171, 238, 0.15);
+}
+
+html.dark .auth-input:focus {
+  background: #242f3d;
+  border-color: #2aabee;
+  box-shadow: 0 0 0 3px rgba(42, 171, 238, 0.25);
 }
 
 .auth-input-icon {
@@ -190,9 +360,13 @@ body {
   transition: color 0.2s;
 }
 
+html.dark .auth-input-icon {
+  color: #64748b;
+}
+
 .auth-input:focus ~ .auth-input-icon,
 .auth-input-group:focus-within .auth-input-icon {
-  color: #3b82f6;
+  color: #2aabee;
 }
 
 /* ====== Auth Submit Button ====== */
